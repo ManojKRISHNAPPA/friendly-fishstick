@@ -1,1 +1,2 @@
-New code in feature-1
+n=input("please enter your name:")
+print("Hi", n, "welcome to the class")
