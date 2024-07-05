@@ -1,0 +1,10 @@
+---
+- name: ansible playbook copy the file from admin to all productionserver
+  hosts: all
+  become: true
+  tasks:
+  - name: copying a file
+    copy:
+      src: /home/ansadmin/copy_module.txt
+      dest: /home/ansadmin/
+

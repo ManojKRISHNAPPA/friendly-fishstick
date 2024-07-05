@@ -1,0 +1,14 @@
+---
+- name: It unistall the httpd
+  hosts: db-server
+  become: true
+  tasks:
+  - name: stopping httpd service
+    service:
+      name: httpd
+      state: stopped
+
+  - name: unistall httpd
+    yum:
+      name: httpd
+      state: removed 

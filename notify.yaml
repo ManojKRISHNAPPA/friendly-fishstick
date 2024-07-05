@@ -1,0 +1,17 @@
+---
+- name: playbook install the httpd
+  hosts: db-server
+  become: true
+  tasks:
+
+  - name: install package
+    yum:
+      name: httpd
+      state: installed
+    notify: start apache
+
+  handlers:
+  - name: start apache
+    service:
+      name: httpd
+      state: started

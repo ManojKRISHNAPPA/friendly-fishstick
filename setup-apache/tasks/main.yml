@@ -1,0 +1,40 @@
+---
+# tasks file for setup-apache
+- name: install package
+  yum:
+    name: httpd
+    state: installed
+  when: ansible_os_family == "RedHat"
+  notify: start apache
+
+- name: install package
+  apt:
+    name: apache2
+    state: present 
+  when: ansible_os_family == "Debian"
+  notify: start apache2
+
+- name: copying the index.html
+  copy:
+    src: /home/ansadmin/index.html
+    dest: /var/www/html
+    mode: 0666
+
+  
+- name: changing the ports from 80 to 8080...
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: '^Listen ' 
+    insertafter: '^#Listen ' 
+    line: Listen {{ port }}
+  when: ansible_os_family == "RedHat"
+  notify: restart apache
+
+- name: changing the ports from 80 to 8080...
+  lineinfile:
+    path: /etc/apache2/ports.conf
+    regexp: '^Listen ' 
+    insertafter: '^#/etc/apache2/sites-enabled/000-default.conf' 
+    line: Listen {{ port }}
+  when: ansible_os_family == "Debian"
+  notify: restart apache2
