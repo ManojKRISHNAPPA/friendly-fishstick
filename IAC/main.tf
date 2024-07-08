@@ -33,3 +33,4 @@ resource "aws_instance" "myinstance02" {
     Name = "node-expoter-server"
   }
 }
+
